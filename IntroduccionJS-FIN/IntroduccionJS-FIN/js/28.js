@@ -1,5 +1,6 @@
 // Selectores
 const heading = document.querySelector('.heading')
+const heading2= document.getElementById('heading2')
 
 // console.log(heading)
 // console.log(heading.tagName)
