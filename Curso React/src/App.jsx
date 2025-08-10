@@ -1,8 +1,17 @@
+import { useState, useEffect } from "react"
 import Header from "./components/Header"
 import Guitar from "./components/Guitar"
 
 function App() {
-  
+  //State
+  const [auth, setAuth]= useState(false)
+  const [total, setTotal] = useState(0)
+  const [carrito, setCarrito] = useState([])
+
+  useEffect(() => {
+    const total = carrito.reduce((acc, guitarra) => acc + guitarra.precio, 0)
+    setTotal(total)
+  }, [carrito])//cambia en función al carrito 
 
   return (
     <>
