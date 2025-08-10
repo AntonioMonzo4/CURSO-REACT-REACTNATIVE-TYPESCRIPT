@@ -12,14 +12,14 @@ formulario.addEventListener('submit', e => {
     alertaPrevia?.remove()
 
     const alerta = document.createElement('DIV')
-    alerta.classList.add('alerta', 'text-white', 'uppercase', 'text-sm', 'text-center', 'p-2', 'font-black')
+    alerta.classNameList.add('alerta', 'text-white', 'uppercase', 'text-sm', 'text-center', 'p-2', 'font-black')
 
     if(nombre === '' || password === '' ) {
         alerta.textContent = 'Todos los campos son obligatorios...'
-        alerta.classList.add('bg-red-500')
+        alerta.classNameList.add('bg-red-500')
     } else {
         alerta.textContent = 'Todo bien, iniciando sesión...'
-        alerta.classList.add('bg-green-500')
+        alerta.classNameList.add('bg-green-500')
     }
 
     formulario.appendChild(alerta)

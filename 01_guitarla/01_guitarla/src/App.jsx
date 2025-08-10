@@ -77,10 +77,10 @@ function App() {
       clearCart={clearCart}
     />
     
-    <main className="container-xl mt-5">
-        <h2 className="text-center">Nuestra Colección</h2>
+    <main classNameName="container-xl mt-5">
+        <h2 classNameName="text-center">Nuestra Colección</h2>
 
-        <div className="row mt-5">
+        <div classNameName="row mt-5">
             {data.map((guitar) => (
                 <Guitar 
                   key={guitar.id}
@@ -94,9 +94,9 @@ function App() {
     </main>
 
 
-    <footer className="bg-dark mt-5 py-5">
-        <div className="container-xl">
-            <p className="text-white text-center fs-4 mt-4 m-md-0">GuitarLA - Todos los derechos Reservados</p>
+    <footer classNameName="bg-dark mt-5 py-5">
+        <div classNameName="container-xl">
+            <p classNameName="text-white text-center fs-4 mt-4 m-md-0">GuitarLA - Todos los derechos Reservados</p>
         </div>
     </footer>
     </>

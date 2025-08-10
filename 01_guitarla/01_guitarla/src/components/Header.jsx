@@ -7,26 +7,26 @@ export default function Header({cart, removeFromCart, decreaseQuantity, increase
     const cartTotal = useMemo( () => cart.reduce( (total, item ) => total + (item.quantity * item.price), 0), [cart] )
 
     return (
-        <header className="py-5 header">
-            <div className="container-xl">
-                <div className="row justify-content-center justify-content-md-between">
-                    <div className="col-8 col-md-3">
+        <header classNameName="py-5 header">
+            <div classNameName="container-xl">
+                <div classNameName="row justify-content-center justify-content-md-between">
+                    <div classNameName="col-8 col-md-3">
                         <a href="index.html">
-                            <img className="img-fluid" src="/img/logo.svg" alt="imagen logo" />
+                            <img classNameName="img-fluid" src="/img/logo.svg" alt="imagen logo" />
                         </a>
                     </div>
-                    <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
+                    <nav classNameName="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
                         <div 
-                            className="carrito"
+                            classNameName="carrito"
                         >
-                            <img className="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
+                            <img classNameName="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
 
-                            <div id="carrito" className="bg-white p-3">
+                            <div id="carrito" classNameName="bg-white p-3">
                                 {isEmpty ? (
-                                    <p className="text-center">El carrito esta vacio</p>
+                                    <p classNameName="text-center">El carrito esta vacio</p>
                                 ) : (
                                 <>
-                                    <table className="w-100 table">
+                                    <table classNameName="w-100 table">
                                         <thead>
                                             <tr>
                                                 <th>Imagen</th>
@@ -41,19 +41,19 @@ export default function Header({cart, removeFromCart, decreaseQuantity, increase
                                                 <tr key={guitar.id}>
                                                     <td>
                                                         <img 
-                                                            className="img-fluid" 
+                                                            classNameName="img-fluid" 
                                                             src={`/img/${guitar.image}.jpg`}
                                                             alt="imagen guitarra" 
                                                         />
                                                     </td>
                                                     <td>{guitar.name}</td>
-                                                    <td className="fw-bold">
+                                                    <td classNameName="fw-bold">
                                                         ${guitar.price}
                                                     </td>
-                                                    <td className="flex align-items-start gap-4">
+                                                    <td classNameName="flex align-items-start gap-4">
                                                         <button
                                                             type="button"
-                                                            className="btn btn-dark"
+                                                            classNameName="btn btn-dark"
                                                             onClick={() => decreaseQuantity(guitar.id)}
                                                         >
                                                             -
@@ -61,7 +61,7 @@ export default function Header({cart, removeFromCart, decreaseQuantity, increase
                                                             {guitar.quantity}
                                                         <button
                                                             type="button"
-                                                            className="btn btn-dark"
+                                                            classNameName="btn btn-dark"
                                                             onClick={() => increaseQuantity(guitar.id)}
                                                         >
                                                             +
@@ -69,7 +69,7 @@ export default function Header({cart, removeFromCart, decreaseQuantity, increase
                                                     </td>
                                                     <td>
                                                         <button
-                                                            className="btn btn-danger"
+                                                            classNameName="btn btn-danger"
                                                             type="button"
                                                             onClick={() => removeFromCart(guitar.id)}
                                                         >
@@ -81,12 +81,12 @@ export default function Header({cart, removeFromCart, decreaseQuantity, increase
                                         </tbody>
                                     </table>
 
-                                    <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
+                                    <p classNameName="text-end">Total pagar: <span classNameName="fw-bold">${cartTotal}</span></p>
                                 </>
                                 )}
 
                                 <button 
-                                    className="btn btn-dark w-100 mt-3 p-2"
+                                    classNameName="btn btn-dark w-100 mt-3 p-2"
                                     onClick={clearCart}
                                 >Vaciar Carrito</button>
                             </div>
