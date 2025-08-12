@@ -34,7 +34,9 @@ function App() {
 
     return (
         <>
-            <Header />
+            <Header 
+            cart={cart}// Esto quiere decir que le estamos pasando el estado del carrito al Header
+            />
 
 
             <main className="container-xl mt-5">
@@ -43,7 +45,7 @@ function App() {
                 <div className="row mt-5">
                     {data.map((guitar) => (
                         <Guitar
-                        key={guitar.id}
+                        key={guitar.id}//para iterar
                         guitar={guitar}
                         cart={cart}
                         setCart={setCart}
