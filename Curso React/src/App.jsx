@@ -11,10 +11,24 @@ function App() {
         setData(db)
     }, [])
 
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState([])//Estado para el carrito
 
     function addToCart(item){
-        setCart(prevCart => [...prevCart, item])
+        const itemExists = cart.findIndex((guitar)=>guitar.id ===item.id)
+        if(itemExists >= 0){
+            console.log("Ya existe en el carrito", item.name)
+            const updatedCart = [...cart]
+            updatedCart[itemExists].quantity++ //esto hace que se actualice la cantidad en el carrito
+            setCart(updatedCart)
+        }else{
+            item.quantity = 1 //Agregamos una propiedad para la cantidad
+
+            console.log("Agregando al carrito", item.name)
+            setCart([...cart, item]
+
+            )
+
+        }
     }
 
 
