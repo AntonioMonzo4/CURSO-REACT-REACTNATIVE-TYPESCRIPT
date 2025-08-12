@@ -11,6 +11,12 @@ function App() {
         setData(db)
     }, [])
 
+    const [cart, setCart] = useState([])
+
+    function addToCart(item){
+        setCart(prevCart => [...prevCart, item])
+    }
+
 
     return (
         <>
@@ -25,6 +31,9 @@ function App() {
                         <Guitar
                         key={guitar.id}
                         guitar={guitar}
+                        cart={cart}
+                        setCart={setCart}
+                        addToCart={addToCart}
                          
                         /> 
                     ))}
