@@ -3,7 +3,7 @@ import { useMemo } from "react";// esto sirve para optimizar el rendimiento de l
 function Header({ cart }) {
 
     //State derivado
-    const isEmpty = () => cart.length === 0; //Esta funcion verifica si el carrito esta vacio y de esta forma no tenemos que crear otro state
+    const isEmpty = useMemo(() => cart.length === 0, [cart]); //Esta funcion verifica si el carrito esta vacio y de esta forma no tenemos que crear otro state
 
     const cartTotal = () => cart.reduce((total, item) => total + item.price * item.quantity, 0);// Esta funcion calcula el total del carrito
     //El metodo reduce() aplica una funcion a un acumulador y a cada elemento de la lista (de izquierda a derecha) para reducirlo a un solo valor.
@@ -23,7 +23,7 @@ function Header({ cart }) {
 
                             <div id="carrito" className="bg-white p-3">
 
-                                {isEmpty() ? (
+                                {isEmpty ? (
 
                                     <p className="text-center">El carrito esta vacio</p>
                                 ) : (
