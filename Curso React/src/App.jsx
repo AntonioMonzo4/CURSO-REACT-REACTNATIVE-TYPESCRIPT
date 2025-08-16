@@ -32,10 +32,38 @@ function App() {
     }
 
 
+    function removeFromCart(id) {
+        setCart(cart.filter(guitar => guitar.id !== id)) //Filtramos el carrito para eliminar el item con el id que se pasa como parametro
+        
+    }
+
+    function increaseQuantity(id) {
+        const updatedCart = cart.map(guitar => {
+            if (guitar.id === id) {
+                return { ...guitar, quantity: guitar.quantity + 1 };
+            }
+            return guitar;
+        });
+        setCart(updatedCart);
+    }
+
+    function decreaseQuantity(id) {
+        const updatedCart = cart.map(guitar => {
+            if (guitar.id === id) {
+                return { ...guitar, quantity: guitar.quantity - 1 };
+            }
+            return guitar;
+        });
+        setCart(updatedCart);
+    }
+
     return (
         <>
             <Header 
             cart={cart}// Esto quiere decir que le estamos pasando el estado del carrito al Header
+            removeFromCart={removeFromCart} //Pasamos la funcion para eliminar del carrito
+            increaseQuantity={increaseQuantity} //Pasamos la funcion para aumentar la cantidad
+            decreaseQuantity={decreaseQuantity} //Pasamos la funcion para disminuir la cantidad
             />
 
 

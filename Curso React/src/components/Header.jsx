@@ -1,11 +1,11 @@
-import { useMemo } from "react";// esto sirve para optimizar el rendimiento de la aplicacion, ya que evita que se recalculen valores que no han cambiado
+import { use, useMemo } from "react";// esto sirve para optimizar el rendimiento de la aplicacion, ya que evita que se recalculen valores que no han cambiado
 
-function Header({ cart }) {
+function Header({ cart , removeFromCart }) { //Recibimos el estado del carrito y la funcion para eliminar del carrito
 
     //State derivado
     const isEmpty = useMemo(() => cart.length === 0, [cart]); //Esta funcion verifica si el carrito esta vacio y de esta forma no tenemos que crear otro state
 
-    const cartTotal = () => cart.reduce((total, item) => total + item.price * item.quantity, 0);// Esta funcion calcula el total del carrito
+    const cartTotal = useMemo(() => cart.reduce((total, item) => total + item.price * item.quantity, 0), [cart]);   // Esta funcion calcula el total del carrito
     //El metodo reduce() aplica una funcion a un acumulador y a cada elemento de la lista (de izquierda a derecha) para reducirlo a un solo valor.
 
     return (
@@ -55,16 +55,18 @@ function Header({ cart }) {
                                                             ${guitar.price}
                                                         </td>
                                                         <td className="flex align-items-start gap-4">
-                                                            <button type="button" className="btn btn-dark">
+                                                            <button type="button" className="btn btn-dark" onClick={() => decreaseQuantity(guitar.id)}>
                                                                 -
                                                             </button>
                                                             ${guitar.quantity}
-                                                            <button type="button" className="btn btn-dark">
+                                                            <button type="button" className="btn btn-dark" onClick={() => increaseQuantity(guitar.id)}>
                                                                 +
                                                             </button>
                                                         </td>
                                                         <td>
-                                                            <button className="btn btn-danger" type="button">
+                                                            <button className="btn btn-danger" type="button"
+                                                            onClick={() => removeFromCart(guitar.id)} //Llamamos a la funcion para eliminar del carrito
+                                                            >
                                                                 X
                                                             </button>
                                                         </td>
@@ -75,7 +77,7 @@ function Header({ cart }) {
                                         </table>
 
 
-                                        <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal()}</span></p>
+                                        <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
                                         <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                                     </>
                                 )}
