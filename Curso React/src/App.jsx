@@ -5,11 +5,19 @@ import { db } from "./data/db"
 
 function App() {
 
+    const MAX_ITEMS = 10;
+    const MIN_ITEMS = 1;
+
+
+    const initialCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
     const [data, setData] = useState([])//tambien se puede poner db 
 
     useEffect(() => { //Esta opción es mejor para las Apis ssino ponemos la de arriba
         setData(db)
-    }, [])
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }, [cart])
 
     const [cart, setCart] = useState([])//Estado para el carrito
 
@@ -29,6 +37,7 @@ function App() {
             )
 
         }
+        saveLocalStorage() //Guardamos el carrito en el localStorage
     }
 
 
@@ -40,7 +49,7 @@ function App() {
     function increaseQuantity(id) {
         const updatedCart = cart.map(guitar => {
             if (guitar.id === id) {
-                return { ...guitar, quantity: guitar.quantity + 1 };
+                return { ...guitar, quantity: Math.min(guitar.quantity + 1, MAX_ITEMS) };
             }
             return guitar;
         });
@@ -50,12 +59,18 @@ function App() {
     function decreaseQuantity(id) {
         const updatedCart = cart.map(guitar => {
             if (guitar.id === id) {
-                return { ...guitar, quantity: guitar.quantity - 1 };
+                return { ...guitar, quantity: Math.max(guitar.quantity - 1, MIN_ITEMS) };
             }
             return guitar;
         });
         setCart(updatedCart);
     }
+
+    function clearCart() {
+        setCart([]);
+    }
+
+   
 
     return (
         <>
@@ -64,6 +79,7 @@ function App() {
             removeFromCart={removeFromCart} //Pasamos la funcion para eliminar del carrito
             increaseQuantity={increaseQuantity} //Pasamos la funcion para aumentar la cantidad
             decreaseQuantity={decreaseQuantity} //Pasamos la funcion para disminuir la cantidad
+            clearCart={clearCart} //Pasamos la funcion para vaciar el carrito
             />
 
 
