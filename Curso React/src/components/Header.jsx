@@ -1,4 +1,4 @@
-
+import { useMemo } from "react";// esto sirve para optimizar el rendimiento de la aplicacion, ya que evita que se recalculen valores que no han cambiado
 
 function Header({ cart }) {
 
