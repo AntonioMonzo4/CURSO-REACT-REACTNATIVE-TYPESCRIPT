@@ -8,9 +8,15 @@ const TURNS = {
   O: 'o',
 }
 
-const Square = ({children, updateBoard, index }) =>{
+const Square = ({children, isSelected, updateBoard, index }) =>{
+  const className = `square ${isSelected ? 'is-selected' : ''}`
+
+  const handleClick = () => {
+    updateBoard()
+  }
+
   return (
-    <div className="square">
+    <div onClick={handleClick} className={className}>
       {children}
     </div>
   )
@@ -18,7 +24,14 @@ const Square = ({children, updateBoard, index }) =>{
 
 function App() {
 
-  const [board, setBoard] = useState(Array(9).fill(null))/*Estado inicial*/ 
+  const [board, setBoard] = useState(Array(9).fill(null))/*Estado inicial*/
+  
+  const [turn, setTurn] = useState(TURNS.x)
+
+  const updateBoard = () =>{
+    const newTurn = turn === TURNS.x ? TURNS.o : TURNS.x
+    setTurn(newTurn)
+  }
 
 
   return (
@@ -32,10 +45,20 @@ function App() {
           <Square
           key={index}/**Pq es único sino no funcionaría */
           index={index}
+          updateBoard={updateBoard}
           >
             {index}
           </Square>
         )
+      </section>
+
+      <section className='turn'>
+        <Square isSelected={turn === TURNS.x}>{/**Cuando este seleccionado cambia el componente hijo */}
+          {TURNS.x}{/**Componente hijo */}
+        </Square>
+        <Square isSelected={turn === TURNS.o}>
+          {TURNS.o}
+        </Square>
       </section>
 
     </main>
