@@ -71,7 +71,7 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       //OPCIÓN 1
-      setWinner((prevWinner) => {
+      setWinner((prevWinner) => {//No utilizado
         return newWinner
       })
 
