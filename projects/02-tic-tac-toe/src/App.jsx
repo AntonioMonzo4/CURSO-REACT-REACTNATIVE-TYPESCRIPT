@@ -70,7 +70,13 @@ function App() {
     //COMPROBAR GANADOR
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
-      setWinner(newWinner) //esto es asíncrono esto se debe a que React agrupa las actualizaciones de estado es decir, que puede que no se actualice inmediatamente
+      //OPCIÓN 1
+      setWinner((prevWinner) => {
+        return newWinner
+      })
+
+      //OPCIÓN 2 
+      //setWinner(newWinner) //esto es asíncrono esto se debe a que React agrupa las actualizaciones de estado es decir, que puede que no se actualice inmediatamente
     //Las actualizaciones de estado en React son asíncronas, lo que significa que el nuevo estado puede no estar disponible inmediatamente después de llamar a setState.
     }
 
