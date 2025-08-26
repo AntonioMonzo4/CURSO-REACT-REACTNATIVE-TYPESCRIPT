@@ -4,7 +4,8 @@ import confetti from 'canvas-confetti'
 
 import { Square } from './components/Square.jsx'
 import {TURNS,} from './constants.js'
-import {checkWinnerFrom} from './logic/board.js'
+import {checkWinnerFrom, checkEndGame} from './logic/board.js'
+import { WinnerModal } from './components/WinnerModal.jsx'
 
 import './App.css'
 
@@ -16,11 +17,7 @@ function App() {
   const [turn, setTurn] = useState(TURNS.x)
   const [winner, setWinner] = useState(null)//ESTADO DE GANADOR null no ganador y false empata
 
-  const checkEndGame = (newBoard) => {
-    return newBoard.every((square) => square !== null)  // Si todas las casillas están ocupadas
-  }
 
- 
 
   const resetGame = () => {
     setBoard(Array(9).fill(null))
@@ -100,38 +97,16 @@ function App() {
       </section>
 
       <section className='turn'>
-        <Square isSelected={turn === TURNS.x}>{/**Cuando este seleccionado cambia el componente hijo */}
-          {TURNS.x}{/**Componente hijo */}
+        <Square isSelected={turn === TURNS.X}>{/**Cuando este seleccionado cambia el componente hijo */}
+          {TURNS.X}{/**Componente hijo */}
         </Square>
-        <Square isSelected={turn === TURNS.o}>
-          {TURNS.o}
+        <Square isSelected={turn === TURNS.O}>
+          {TURNS.O}
         </Square>
       </section>
 
 
-      {/**SECCIÓN CON RENDERIZADO CONDICIONAL */}
-      {
-        winner !== null && (
-          <section className="winner">
-            <div className="text">
-              <h2>
-                {
-                  winner === false ? "Empate" : `Ganador: ${winner}`
-                }
-              </h2>
-
-              <header className="win">
-                {winner && <Square>{winner}</Square>}
-              </header>
-
-              <footer>
-                <button onClick={resetGame}>Reiniciar</button>
-              </footer>
-            </div>
-          </section>
-        )
-
-      }
+        <WinnerModal winner={winner} resetGame={resetGame} />
 
     </main>
   )
