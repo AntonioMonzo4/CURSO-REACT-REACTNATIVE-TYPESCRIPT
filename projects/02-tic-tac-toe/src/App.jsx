@@ -1,37 +1,13 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import confetti from 'canvas-confetti'
+
+
+import { Square } from './components/Square.jsx'
+import {TURNS,} from './constants.js'
+import {checkWinnerFrom} from './logic/board.js'
+
 import './App.css'
 
-const TURNS = {
-  X: 'X',
-  O: 'O',
-}
-
-const Square = ({ children, isSelected, updateBoard, index }) => {
-  const className = `square ${isSelected ? 'is-selected' : ''}`
-
-  const handleClick = () => {
-    updateBoard(index)
-  }
-
-  return (
-    <div onClick={handleClick} className={className}>
-      {children}
-    </div>
-  )
-}
-
-const WINNER_COMBOS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-]
 
 function App() {
 
@@ -40,17 +16,17 @@ function App() {
   const [turn, setTurn] = useState(TURNS.x)
   const [winner, setWinner] = useState(null)//ESTADO DE GANADOR null no ganador y false empata
 
+  const checkEndGame = (newBoard) => {
+    return newBoard.every((square) => square !== null)  // Si todas las casillas están ocupadas
+  }
 
-  const checkWinner = (boardToCheck) => {
-    for (const combo of WINNER_COMBOS) {
-      const [a, b, c] = combo
-      if (boardToCheck[a] &&
-        boardToCheck[a] === boardToCheck[b] &&
-        boardToCheck[a] === boardToCheck[c]) {
-        return boardToCheck[a]
-      }
-    }
-    return null
+ 
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+
   }
 
   const updateBoard = (index) => {
@@ -68,39 +44,59 @@ function App() {
     setTurn(newTurn)//actualizar el estado del turno
 
     //COMPROBAR GANADOR
-    const newWinner = checkWinner(newBoard)
+    const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
       //OPCIÓN 1
-      setWinner((prevWinner) => {//No utilizado
-        return newWinner
-      })
+      //setWinner((prevWinner) => {//No utilizado
+      //return newWinner
+      //})
 
       //OPCIÓN 2 
-      //setWinner(newWinner) //esto es asíncrono esto se debe a que React agrupa las actualizaciones de estado es decir, que puede que no se actualice inmediatamente
-    //Las actualizaciones de estado en React son asíncronas, lo que significa que el nuevo estado puede no estar disponible inmediatamente después de llamar a setState.
+      confetti()//librería para lanzar confetti
+      setWinner(newWinner) //esto es asíncrono esto se debe a que React agrupa las actualizaciones de estado es decir, que puede que no se actualice inmediatamente
+      //Las actualizaciones de estado en React son asíncronas, lo que significa que el nuevo estado puede no estar disponible inmediatamente después de llamar a setState.
+
+
+
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false)/*Empate*/
     }
 
-    }
+  }
 
-  
+
 
 
   return (
 
 
+
     <main className='board'>
       <h1>Tic Tac Toe</h1>
+      <button onClick={resetGame}>Reiniciar</button>
 
+      {/**
+        Las siguientes líneas (110 a 123) recorren el array 'board' y renderizan un componente <Square> para cada posición del tablero:
+        - board.map((square, index) => {...}): recorre cada casilla del tablero, donde 'square' es el valor actual (X, O o null) y 'index' es la posición.
+        - <Square key={index} ...>: se usa 'key' para que React identifique cada componente de la lista de forma única y eficiente. Es obligatorio cuando se renderizan listas.
+        - index={index}: se pasa la posición al componente Square para saber cuál casilla se está renderizando.
+        - updateBoard={updateBoard}: función que se ejecuta al hacer clic en la casilla para actualizar el tablero.
+        - {square}: el valor que se muestra en la casilla (X, O o vacío).
+        Así, se genera el tablero visualmente y se mantiene sincronizado con el estado del juego.
+      */}
       <section className='game'>
-        return (
-        <Square
-          key={index}/**Pq es único sino no funcionaría */
-          index={index}
-          updateBoard={updateBoard}
-        >
-          {index}
-        </Square>
-        )
+
+        {board.map((square, index) => {
+          return (
+            <Square
+              key={index}/**Pq es único sino no funcionaría */
+              index={index}
+              updateBoard={updateBoard}
+            >
+              {square}
+            </Square>
+          )
+        })}
       </section>
 
       <section className='turn'>
@@ -111,6 +107,31 @@ function App() {
           {TURNS.o}
         </Square>
       </section>
+
+
+      {/**SECCIÓN CON RENDERIZADO CONDICIONAL */}
+      {
+        winner !== null && (
+          <section className="winner">
+            <div className="text">
+              <h2>
+                {
+                  winner === false ? "Empate" : `Ganador: ${winner}`
+                }
+              </h2>
+
+              <header className="win">
+                {winner && <Square>{winner}</Square>}
+              </header>
+
+              <footer>
+                <button onClick={resetGame}>Reiniciar</button>
+              </footer>
+            </div>
+          </section>
+        )
+
+      }
 
     </main>
   )
