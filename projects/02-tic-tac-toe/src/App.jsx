@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import confetti from 'canvas-confetti'
 
 
@@ -30,7 +30,8 @@ function App() {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
-
+    window.localStorage.removeItem('board')
+    window.localStorage.removeItem('turn') 
   }
 
   const updateBoard = (index) => {
@@ -72,6 +73,12 @@ function App() {
     }
 
   }
+
+  useEffect(() => {
+  console.log('useEffect')
+  
+  },[winner])
+
 
 
 
