@@ -12,8 +12,15 @@ import './App.css'
 
 function App() {
 
-  const [board, setBoard] = useState(Array(9).fill(null))/*Estado inicial*/
+  const [board, setBoard] = useState(()=> {
+    const boardFromStorage = window.localStorage.getItem('board')
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
+  
+  })/*Estado inicial*/
 
+
+
+    
   const [turn, setTurn] = useState(TURNS.x)
   const [winner, setWinner] = useState(null)//ESTADO DE GANADOR null no ganador y false empata
 
@@ -39,6 +46,11 @@ function App() {
     //ACTUALIZAR TURNO
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X//asignar el nuevo turno
     setTurn(newTurn)//actualizar el estado del turno
+
+    //guardar aqui partida en LocalStorage
+
+    window.localStorage.setItem('board', JSON.stringify(newBoard))//guardar el tablero en localStorage
+    window.localStorage.setItem('turn', newTurn)//guardar el turno en localStorage  
 
     //COMPROBAR GANADOR
     const newWinner = checkWinnerFrom(newBoard)
