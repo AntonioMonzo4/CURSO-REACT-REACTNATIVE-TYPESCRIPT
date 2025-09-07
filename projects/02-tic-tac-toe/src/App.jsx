@@ -76,12 +76,10 @@ function App() {
 
   useEffect(() => {
   console.log('useEffect')
-saveGameToStorage({
-  board : newBoard,
-  turn : newTurn  
+
 })
   
-  },[turn,board])
+  },[turn,board]);
 
 
 
